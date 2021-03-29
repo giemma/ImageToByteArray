@@ -55,7 +55,13 @@ namespace ImageToArray
             ImgDestination.Source = ConvertBitmap(DestinationImage);
 
             LblOriginalW.Content = SourceImage.Width;
+            TxtDestinationW.Text = SourceImage.Width.ToString();
+            DestinationW = SourceImage.Width;
+
             LblOriginalH.Content = SourceImage.Height;
+            TxtDestinationH.Text = SourceImage.Height.ToString();
+            DestinationH = SourceImage.Height;
+
             OriginalWHRatio = ((double)SourceImage.Width / (double)SourceImage.Height);
             LblOriginalWHRatio.Content = OriginalWHRatio;
         }
@@ -63,29 +69,26 @@ namespace ImageToArray
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            for (int y = 0; y < SourceImage.Height; y++)
+            for (int y = 0; y < DestinationImage.Height; y++)
             {
-                for (int x = 0; x < SourceImage.Width; x++)
+                for (int x = 0; x < DestinationImage.Width; x++)
                 {
-                    var color = SourceImage.GetPixel(x, y);
+                    var color = DestinationImage.GetPixel(x, y);
 
                     int b1, b2;
 
                     b1 = (color.R & 0xF8) | (color.G >> 5);
                     b2 = ((color.G & 0x1C) << 3) | (color.B >> 3);
 
-
                     stringBuilder.AppendLine($"0x{b2.ToString("X")},0x{b1.ToString("X")},");
                 }
             }
 
-            string header = $"const unsigned char myImage[{SourceImage.Height * SourceImage.Width * 2}] = {{";
+            string header = $"const unsigned char myImage[{DestinationImage.Height * DestinationImage.Width * 2}] = {{";
             string code = stringBuilder.ToString();
             code = code.Substring(0, code.Length - 3);
             string footer = "};";
             TxtCode.Text = $"{header}{Environment.NewLine}{code}{Environment.NewLine}{footer}";
-
-
         }
 
 

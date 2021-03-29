@@ -53,7 +53,7 @@
 
         </Grid>
 
-        <TextBox  Grid.Row="0" Grid.Column="1"  x:Name="TxtCode" ></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1"  x:Name="TxtCode" MaxHeight="200" ></TextBox>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Source image" HorizontalAlignment="Center"></Label>
         <Image Grid.Row="2" Grid.Column="0" x:Name="ImgOriginal"></Image>

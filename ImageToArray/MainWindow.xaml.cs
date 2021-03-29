@@ -69,9 +69,9 @@ namespace ImageToArray
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            for (int y = 0; y < DestinationImage.Height; y++)
+            for (int y = 0; y < DestinationImage.PhysicalDimension.Height; y++)
             {
-                for (int x = 0; x < DestinationImage.Width; x++)
+                for (int x = 0; x < DestinationImage.PhysicalDimension.Width; x++)
                 {
                     var color = DestinationImage.GetPixel(x, y);
 
@@ -84,7 +84,7 @@ namespace ImageToArray
                 }
             }
 
-            string header = $"const unsigned char myImage[{DestinationImage.Height * DestinationImage.Width * 2}] = {{";
+            string header = $"const unsigned char myImage[{DestinationImage.PhysicalDimension.Height * DestinationImage.PhysicalDimension.Width * 2}] = {{";
             string code = stringBuilder.ToString();
             code = code.Substring(0, code.Length - 3);
             string footer = "};";
@@ -118,11 +118,11 @@ namespace ImageToArray
 
                 if (DestinationH > 0)
                 {
-                    var DestinationImage = new Bitmap(x, DestinationH);
+                    DestinationImage = new Bitmap(x,DestinationH);
 
                     using (var graphics = Graphics.FromImage(DestinationImage))
                         graphics.DrawImage(SourceImage, 0, 0, x, DestinationH);
-
+                    
                     ImgDestination.Source = ConvertBitmap(DestinationImage);
                 }
             }
@@ -144,7 +144,7 @@ namespace ImageToArray
 
                 if (DestinationW > 0)
                 {
-                    var DestinationImage = new Bitmap(DestinationW, x);
+                    DestinationImage = new Bitmap(DestinationW, x);
 
                     using (var graphics = Graphics.FromImage(DestinationImage))
                         graphics.DrawImage(SourceImage, 0, 0, DestinationW, x);
